@@ -109,7 +109,7 @@ def randomly_select_first(sequence, key, action, random_generator=None):
             selected = collected[index]
         else:
             if not random_generator:
-                print "Missing value for random selection among ", collected
+                print("Missing value for random selection among ", collected)
                 sys.exit(1)
             selected = random_generator.pop(0)
         logger = logging.getLogger(SVT_LOGGER)
@@ -163,7 +163,7 @@ def redistribute_ballots(selected, weight, hopefuls, allocated, vote_count):
                 transferred.append(ballot)
             else:
                 i += 1
-    for move, ballots in moves.iteritems():
+    for move, ballots in moves.items():
         times = len(ballots)
         description =  "from {0} to {1} {2}*{3}={4}".format(move[0],
                                                             move[1],
@@ -220,7 +220,7 @@ def count_description(vote_count, candidates):
     is a candidate and each {1} is the corresponding vote count.
     """
     
-    return  ';'.join(map(lambda x: "{0} = {1}".format(x, vote_count[x]),
+    return  ' ;'.join(map(lambda x: "{0} = {1}".format(x, vote_count[x]),
                          candidates))
 
    
@@ -249,7 +249,7 @@ def count_stv(ballots, seats, droop = True, constituencies = None,
     rejected = []
     # The number of candidates elected per constituency
     constituencies_elected = {}
-    for (candidate, constituency) in constituencies.iteritems():
+    for (candidate, constituency) in constituencies.items():
         constituencies_elected[constituency] = 0
         if candidate not in allocated:
             allocated[candidate] = []
@@ -309,7 +309,7 @@ def count_stv(ballots, seats, droop = True, constituencies = None,
                                                    action=Action.ELECT,
                                                    random_generator=rnd_gen)
             if best_candidate not in hopefuls:
-                print "Not a valid candidate: ",best_candidate
+                print("Not a valid candidate: ",best_candidate)
                 sys.exit(1)
             hopefuls.remove(best_candidate)
             was_elected = elect_reject(best_candidate, vote_count,
@@ -394,7 +394,7 @@ if __name__ == "__main__":
     ballots = []
     ballots_file = sys.stdin
     if args.ballots_file != 'sys.stdin':
-        ballots_file = open(args.ballots_file, 'U')
+        ballots_file = open(args.ballots_file, 'r')
     ballots_reader = csv.reader(ballots_file, delimiter=',',
                                 quotechar='"',
                                 skipinitialspace=True)
@@ -422,6 +422,6 @@ if __name__ == "__main__":
                                       args.quota,
                                       args.random)
 
-    print "Results:"
+    print("Results:")
     for result in elected:
-        print result
+        print(result)
